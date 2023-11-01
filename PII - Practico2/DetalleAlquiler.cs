@@ -10,15 +10,21 @@ namespace PII___Practico2
     {
         private int cantDias;
         private DateTime fechaRetiro;
-
-        public DetalleAlquiler(int cantDias, DateTime fechaRetiro)
+        Vehiculo vehiculo;
+        // DUDA--HAY Q RELACIONAR OBJ VEHICULO A ESTA CLASE??
+        public DetalleAlquiler(int cantDias, DateTime fechaRetiro, Vehiculo vehiculo)
         {
             this.cantDias = cantDias;
             this.fechaRetiro = fechaRetiro;
+            this.vehiculo = vehiculo;
         }
+        
         public int getCantDias() { return cantDias; }
         public DateTime getFechaRetiro() {  return fechaRetiro; }
+        public Vehiculo getVehiculo() {  return vehiculo; }
+        
         public void setCantDias(int cantDias) { this.cantDias=cantDias; }
         public void setFechaRetiro(DateTime fechaR) { this.fechaRetiro = fechaR;}
+        public void setVehiculo(Vehiculo vehiculo) { this.vehiculo=vehiculo;}
     }
 }
