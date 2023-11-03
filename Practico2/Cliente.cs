@@ -13,7 +13,6 @@ namespace Practico2
         private string apellido;
         private int telefono;
         
-
         public Cliente(int documento, string nombre, string apellido, int telefono)
         {
             this.documento = documento;
@@ -30,5 +29,7 @@ namespace Practico2
         public void SetNombre(string nombre) => this.nombre = nombre;
         public void SetApellido(string apellido) => this.apellido = apellido;
         public void SetTelefono(int telefono) => this.telefono = telefono;
+
+      
     }
 }

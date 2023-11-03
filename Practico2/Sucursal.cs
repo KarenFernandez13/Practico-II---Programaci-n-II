@@ -30,13 +30,63 @@ namespace Practico2
         public void SetColAlquileres(List<Alquiler> colAlquileres) => this.colAlquileres = colAlquileres;
         public void SetColVehiculos(List<Vehiculo> colVehiculos) => this.colVehiculos = colVehiculos;
         
-        public string VehiculosStock() 
+        public string VehiculosStock(int numero) 
         {
-            foreach (Vehiculo item in colVehiculos)
+            string info = "";
+            if (numero == 0)
             {
-                return item.GetMarca();
+                foreach (Vehiculo item in this.colVehiculos)
+                {
+                    info += "\n " + item.GetNumero() + ". " + item.GetMarca() + "\n    - " + item.GetMatricula() + "\n    - " + item.GetColor() + "\n    - Capacidad del tanque: " + item.GetCapacidadTanque() + "\n    - Km/L: " + item.GetKmLitro() + "\n    - $USD " + item.GetPrecioAlquilerDia() + "\n    Disponibilidad: " + item.GetDisponibilidad();
+                }
+                return info;
+            } else if (numero == 1)
+            {
+                foreach (Vehiculo item in this.colVehiculos)
+                {
+                    if (item.GetDisponibilidad() == true) 
+                    {
+                        info += "\n " + item.GetNumero() + ". " + item.GetMarca() + "\n    - " + item.GetMatricula() + "\n    - " + item.GetColor() + "\n    - Capacidad del tanque: " + item.GetCapacidadTanque() + "\n    - Km/L: " + item.GetKmLitro() + "\n    - $USD " + item.GetPrecioAlquilerDia();
+                    }
+                }
+                return info;
             }
-            return "";
+            return info;
+        }
+            
+
+        public bool BuscarCliente(int documento) 
+        {
+            foreach (Alquiler item in this.colAlquileres)
+            {
+                if (item.GetCliente().GetDocumento() == documento)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int DarAlquileresPorCliente (int documento)
+        {
+            int cantidadAlquileres = 0;
+            foreach (Alquiler item in this.colAlquileres)
+            {
+               if (item.GetCliente().GetDocumento() == documento)
+                {
+                    cantidadAlquileres++;
+                }
+            }
+            return cantidadAlquileres;
+        }
+
+        public void CambiarDisponibilidadPorNumeroDeVehiculo(int numero) 
+        {
+            foreach (Vehiculo item in this.colVehiculos)
+            {
+                if (item.GetNumero() == numero)
+                    item.CambiarDisponibilidad();
+            }
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Practico2
         private Vehiculo vehiculo;
         private DateTime fechaRetiro;
         private int cantidadDias;
-
         public Detalle(Vehiculo vehiculo, DateTime fechaRetiro, int cantidadDias)
         {
             this.vehiculo = vehiculo;

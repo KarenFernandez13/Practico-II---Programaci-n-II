@@ -45,6 +45,14 @@ namespace Practico2
         public void SetDisponibilidad(bool disponibilidad) => this.disponibilidad = disponibilidad;
         public void SetPrecioAlquilerDia(double precioAlquilerDia) => this.precioAlquilerDia = precioAlquilerDia;
         public void SetKmLitro(int kmLitro) => this.kmLitro = kmLitro;
-        
+
+        public void CambiarDisponibilidad()
+        {
+            if (this.GetDisponibilidad() == true)
+
+                this.SetDisponibilidad(false);
+
+            else this.SetDisponibilidad(true);
+        }
     }
 }
