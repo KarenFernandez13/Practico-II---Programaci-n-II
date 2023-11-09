@@ -32,21 +32,41 @@ namespace Practico2
         
         public string VehiculosStock(int numero) 
         {
+            var objetosFiltrados = colVehiculos.Where(obj => obj is Deportivo || obj is Utilitario || obj is Familiar).ToList();
             string info = "";
             if (numero == 0)
             {
-                foreach (Vehiculo item in this.colVehiculos)
+                foreach (var obj in objetosFiltrados)
                 {
-                    info += "\n " + item.GetNumero() + ". " + item.GetMarca() + "\n    - " + item.GetMatricula() + "\n    - " + item.GetColor() + "\n    - Capacidad del tanque: " + item.GetCapacidadTanque() + "\n    - Km/L: " + item.GetKmLitro() + "\n    - $USD " + item.GetPrecioAlquilerDia() + "\n    Disponibilidad: " + item.GetDisponibilidad();
+                    if (obj is Deportivo) {
+                        info += "\n\n - DEPORTIVO - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Velocidad maxima: " + ((Deportivo)obj).GetVelocidadMaxima() +  "\n    Disponibilidad: " + obj.GetDisponibilidad();
+                    } else if (obj is Utilitario)
+                    {
+                        info += "\n\n - UTILITARIO - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Capacidad máxima: " + ((Utilitario)obj).GetCapacidadMaxima() + "\n    Disponibilidad: " + obj.GetDisponibilidad();
+                    } else if (obj is Familiar)
+                    {
+                        info += "\n\n - FAMILIAR - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Capacidad maletero: " + ((Familiar)obj).GetCapacidadMaletero() + "\n    Disponibilidad: " + obj.GetDisponibilidad();
+                    }
                 }
                 return info;
             } else if (numero == 1)
             {
-                foreach (Vehiculo item in this.colVehiculos)
+                foreach (var obj in objetosFiltrados)
                 {
-                    if (item.GetDisponibilidad() == true) 
+                    if (obj.GetDisponibilidad() == true) 
                     {
-                        info += "\n " + item.GetNumero() + ". " + item.GetMarca() + "\n    - " + item.GetMatricula() + "\n    - " + item.GetColor() + "\n    - Capacidad del tanque: " + item.GetCapacidadTanque() + "\n    - Km/L: " + item.GetKmLitro() + "\n    - $USD " + item.GetPrecioAlquilerDia();
+                        if (obj is Deportivo)
+                        {
+                            info += "\n\n - DEPORTIVO - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Velocidad maxima: " + ((Deportivo)obj).GetVelocidadMaxima();
+                        }
+                        else if (obj is Utilitario)
+                        {
+                            info += "\n\n - UTILITARIO - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Capacidad máxima: " + ((Utilitario)obj).GetCapacidadMaxima();
+                        }
+                        else if (obj is Familiar)
+                        {
+                            info += "\n\n - FAMILIAR - \n" + obj.GetNumero() + ". " + obj.GetMarca() + "\n    - " + obj.GetMatricula() + "\n    - " + obj.GetColor() + "\n    - Capacidad del tanque: " + obj.GetCapacidadTanque() + "\n    - Km/L: " + obj.GetKmLitro() + "\n    - $USD " + obj.GetPrecioAlquilerDia() + "\n    Capacidad maletero: " + ((Familiar)obj).GetCapacidadMaletero();
+                        }
                     }
                 }
                 return info;
@@ -66,27 +86,34 @@ namespace Practico2
             }
             return false;
         }
-
-        public int DarAlquileresPorCliente (int documento)
-        {
-            int cantidadAlquileres = 0;
-            foreach (Alquiler item in this.colAlquileres)
-            {
-               if (item.GetCliente().GetDocumento() == documento)
-                {
-                    cantidadAlquileres++;
-                }
-            }
-            return cantidadAlquileres;
-        }
-
-        public void CambiarDisponibilidadPorNumeroDeVehiculo(int numero) 
+        public void CambiarDisponibilidadPorNumeroDeVehiculo(int numero)
         {
             foreach (Vehiculo item in this.colVehiculos)
             {
                 if (item.GetNumero() == numero)
                     item.CambiarDisponibilidad();
             }
+        }
+        public List<Alquiler> DarAlquileresPorCliente (int documento)
+        {
+            List<Alquiler> alquileresCliente = new List<Alquiler>();
+            foreach (Alquiler item in this.colAlquileres)
+            {
+               if (item.GetCliente().GetDocumento() == documento)
+                {
+                    alquileresCliente.Add(item);
+                }
+            }
+            return alquileresCliente;
+        }
+        public string DetallarListaCliente(List<Alquiler> alquileresCliente)
+        {
+            string info = "";
+            foreach (Alquiler item in alquileresCliente)
+            {
+                info += "N° Alquiler: " + item.GetNumero() + "\nPrecio total: " + item.GetPrecioTotal() + "\nVehiculos incluidos\n" + item.VehiculosIncluidos() + "\nDetalle por vehiculo\n" + item.DetalleDeCadaVehiculo() + "\n\n";
+            }
+            return info;
         }
     }
 }
